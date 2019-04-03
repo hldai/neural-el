@@ -230,11 +230,8 @@ def main(_):
             print("WRONG MODE!")
             sys.exit(0)
 
-
-
-
-
     sys.exit()
+
 
 if __name__ == '__main__':
     tf.app.run()

@@ -5,7 +5,7 @@ import readers.utils as utils
 from readers.Mention import Mention
 from readers.config import Config
 from readers.vocabloader import VocabLoader
-from ccg_nlpy import remote_pipeline
+# from ccg_nlpy import remote_pipeline
 
 start_word = "<s>"
 end_word = "<eos>"
@@ -14,8 +14,9 @@ class InferenceReader(object):
     def __init__(self, config, vocabloader, test_mens_file,
                  num_cands, batch_size, strict_context=True,
                  pretrain_wordembed=True, coherence=True):
-        self.pipeline = remote_pipeline.RemotePipeline(
-            server_api='http://macniece.seas.upenn.edu:4001')
+        # self.pipeline = remote_pipeline.RemotePipeline(
+        #     server_api='http://macniece.seas.upenn.edu:4001')
+        self.pipeline = None
         self.typeOfReader = "inference"
         self.start_word = start_word
         self.end_word = end_word
@@ -33,6 +34,7 @@ class InferenceReader(object):
         # Label Vocab
         (self.label2idx, self.idx2label) = vocabloader.getLabelVocab()
         self.num_labels = len(self.idx2label)
+        print('n_labels', self.num_labels)
 
         # Known WID Vocab
         (self.knwid2idx, self.idx2knwid) = vocabloader.getKnwnWidVocab()
@@ -46,6 +48,7 @@ class InferenceReader(object):
         (self.cohG92idx, self.idx2cohG9) = utils.load(
             config.cohstringG9_vocab_pkl)
         self.num_cohstr = len(self.idx2cohG9)
+        print('n_cohstr', self.num_cohstr)
 
         # Crosswikis
         print("Loading Crosswikis dict. (takes ~2 mins to load)")
